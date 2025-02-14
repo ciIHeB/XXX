@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Message ❤️</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Swanky+and+Moo+Moo&display=swap">
+    <style>
+        /* General Styling */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: pink;
+            color: pink;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Typewriter Text Styling */
+        .typewrite > .wrap { 
+            color: red;
+            font-family: 'Swanky and Moo Moo', cursive;
+            font-size: 2rem;
+        }
+
+        * {
+            color: pink;
+            text-decoration: none;
+        }
+
+        /* Flower and Heart Animations */
+        .flower, .heart {
+            position: absolute;
+            animation: float 10s infinite;
+            font-size: 30px;
+        }
+
+        .flower {
+            top: 0;
+            animation-duration: 12s;
+        }
+
+        .heart {
+            bottom: 0;
+            animation-duration: 10s;
+        }
+
+        /* Floating Effect */
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-300px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+
+        /* Heart and Flower Placement */
+        .flower:nth-child(odd) {
+            left: 10%;
+        }
+
+        .flower:nth-child(even) {
+            right: 5%;
+        }
+
+        .heart:nth-child(odd) {
+            left: 20%;
+        }
+
+        .heart:nth-child(even) {
+            right: 25%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>
+        <a class="typewrite" data-period="2000" 
+           data-type='["Nhebbek ❤️",  
+                        "N3azzek 💖",  
+                        "Nmout 3lik 😘",  
+                        "Nghar 3lik 😍🔥",  
+                        "Enti el donya mta3i 🌍❤️",  
+                        "3andi ma3za kbira lik 💕",  
+                        "Enti el kol fel kol 💯💞",  
+                        "N9addrek barcha 🙏❤️",  
+                        "3andi i7sass 9awi bik 💓✨",  
+                        "N7ess rou7i 9riba mennek barcha 🤗💖",  
+                        "Enti 7obb 7ayati 💘",  
+                        "Enti wa7dek elli fi 9albi 💖🔐",  
+                        "Ana mghrom bik 😍❤️",  
+                        "9albi 3andek ❤️🔒",  
+                        "Enti el 7obb el 7a9i9i mta3i 💍💖",  
+                        "El 7obb mta3i lik ma 3andouch 7doud 🚀💞",  
+                        "Enti nseebi w 9adri ✨💑",  
+                        "Enti 9orat 3ini 👀💖",  
+                        "3andek bla9a kha9sa fi 9albi ❤️‍🔥",  
+                        "Ana hbla bik 😜❤️",  
+                        "Enti chamsi elli tadhwi 7ayati ☀️💛",  
+                        "N3arefek 😉", "Salem 👋"]'>
+        </a>
+    </h1>
+
+    <!-- Floating Hearts and Flowers -->
+    <div class="flower">🌸</div>
+    <div class="flower">🌷</div>
+    <div class="flower">🌹</div>
+    <div class="flower">💐</div>
+    <div class="heart">❤️</div>
+    <div class="heart">💖</div>
+    <div class="heart">💘</div>
+    <div class="heart">💕</div>
+
+    <script>
+        var TxtType = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+
+        TxtType.prototype.tick = function() {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+            var that = this;
+            var delta = 200 - Math.random() * 100;
+
+            if (this.isDeleting) { delta /= 2; }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 500;
+            }
+
+            setTimeout(function() {
+                that.tick();
+            }, delta);
+        };
+
+        window.onload = function() {
+            var elements = document.getElementsByClassName('typewrite');
+            for (var i=0; i<elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                    new TxtType(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+        };
+    </script>
+
+</body>
+</html>
